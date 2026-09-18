@@ -1,29 +1,16 @@
-# Environment
-.env
-.env.*
-!.env.example
-
-# Python
 __pycache__/
 *.py[cod]
-.venv/
-venv/
+*$py.class
 .pytest_cache/
-.mypy_cache/
-.ruff_cache/
-
-# Node / JavaScript
-node_modules/
+.coverage
+htmlcov/
 dist/
 build/
-.next/
-*.log
-
-# Databases
-*.sqlite3
-*.db
-
-# OS / IDE
-.DS_Store
-.idea/
+*.egg-info/
+.env
+.venv
+env/
+venv/
+venv*/
 .vscode/
+*.log
