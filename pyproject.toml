@@ -27,3 +27,10 @@ commit_version_number = true
 tag_commit = true
 changelog_file = "CHANGELOG.md"
 build_command = "python -m pip install uv && python -m uv build"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "ruff>=0.16.8",
+]
