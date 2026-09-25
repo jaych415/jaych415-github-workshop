@@ -11,3 +11,4 @@ def test_home_page_renders() -> None:
     assert response.status_code == 200
     assert "CSE120 GitHub Workshop" in response.text
     assert "Average Calculator" in response.text
+    assert "Reset" in response.text
