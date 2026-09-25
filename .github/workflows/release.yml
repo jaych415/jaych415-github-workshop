@@ -7,7 +7,6 @@ on:
       - main
   workflow_dispatch:
 
-# Global permissions kept minimal; job-level overrides applied.
 permissions:
   contents: read
 
@@ -29,30 +28,22 @@ jobs:
       tag: ${{ steps.release.outputs.tag }}
 
     steps:
-      - name: Generate GitHub App Token
-        id: generate_token
-        uses: actions/github-app-token@v2
-        with:
-          app-id: ${{ secrets.APP_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ steps.generate_token.outputs.token }}
 
       - id: release
         name: Python Semantic Release
         uses: python-semantic-release/python-semantic-release@master
         with:
-          github_token: ${{ steps.generate_token.outputs.token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Release (GitHub)
         if: steps.release.outputs.released == 'true'
         uses: python-semantic-release/publish-action@main
         with:
-          github_token: ${{ steps.generate_token.outputs.token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ steps.release.outputs.tag }}
 
   docker:
