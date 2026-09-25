@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.3.1 (2026-09-25)
+
+### Bug Fixes
+
+- Handle non-numeric input
+  ([`4f91452`](https://github.com/jaych415/jaych415-github-workshop/commit/4f91452e9b3b69f34917ed67ae6a155daa642c76))
+
+
 ## v0.3.0 (2026-09-25)
 
 
