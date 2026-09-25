@@ -1,3 +1,5 @@
+from statistics import mean
+
 from fastapi import FastAPI
 from nicegui import ui
 
@@ -9,6 +11,13 @@ async def health_check() -> dict[str, str]:
     return {"status": "ok"}
 
 
+def parse_and_average(raw: str | None) -> str:
+    raw = raw or ""
+    tokens = [t for part in raw.split(",") for t in part.strip().split()] if raw else []
+    values = [float(t) for t in tokens if t]
+    return f"Average: {mean(values):.4f}"
+
+
 @ui.page("/")
 def home() -> None:
     ui.label("CSE120 GitHub Workshop").classes("text-2xl font-bold")
@@ -18,17 +27,20 @@ def home() -> None:
         label="Numbers (comma or space separated)"
     ).classes("w-full h-32")
     result_label = ui.label(
-        "Enter numbers..."
+        "Enter numbers and click Compute"
     ).classes("mt-4 text-lg")
+
+    def compute() -> None:
+        result_label.text = parse_and_average(numbers_input.value)
 
     def reset() -> None:
         numbers_input.value = ""
-        result_label.text = "Enter numbers..."
+        result_label.text = "Enter numbers and click Compute"
 
-    ui.button(
-        "Reset",
-        on_click=reset,
-    ).classes("mt-2 bg-red-500 text-white")
+    ui.button("Compute Average", on_click=compute).classes("mt-2")
+    ui.button("Reset", on_click=reset).classes(
+        "mt-2 ml-4 bg-red-500 text-white"
+    )
     ui.separator()
 
 
