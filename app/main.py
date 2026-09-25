@@ -14,7 +14,15 @@ async def health_check() -> dict[str, str]:
 def parse_and_average(raw: str | None) -> str:
     raw = raw or ""
     tokens = [t for part in raw.split(",") for t in part.strip().split()] if raw else []
-    values = [float(t) for t in tokens if t]
+
+    if not tokens:
+        return "Error: enter at least one number"
+
+    try:
+        values = [float(t) for t in tokens if t]
+    except ValueError:
+        return "Error: non-numeric value detected"
+
     return f"Average: {mean(values):.4f}"
 
 
