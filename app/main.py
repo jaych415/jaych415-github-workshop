@@ -12,29 +12,24 @@ async def health_check() -> dict[str, str]:
 @ui.page("/")
 def home() -> None:
     ui.label("CSE120 GitHub Workshop").classes("text-2xl font-bold")
-    ui.label("Average Calculator").classes("text-lg text-gray-600")
+    ui.label("Average Calculator").classes("text-lg text-gray-600 mb-4")
 
-    numbers_input = ui.input("Numbers (comma-separated)")
-    result = ui.label("")
-
-    def calculate_average() -> None:
-        try:
-            values = [float(value.strip()) for value in numbers_input.value.split(",")]
-            if not values:
-                raise ValueError
-        except ValueError:
-            result.text = "Enter one or more valid numbers."
-            return
-
-        result.text = f"Average: {sum(values) / len(values):g}"
+    numbers_input = ui.textarea(
+        label="Numbers (comma or space separated)"
+    ).classes("w-full h-32")
+    result_label = ui.label(
+        "Enter numbers..."
+    ).classes("mt-4 text-lg")
 
     def reset() -> None:
         numbers_input.value = ""
-        result.text = ""
+        result_label.text = "Enter numbers..."
 
-    with ui.row():
-        ui.button("Calculate", on_click=calculate_average)
-        ui.button("Reset", on_click=reset)
+    ui.button(
+        "Reset",
+        on_click=reset,
+    ).classes("mt-2 bg-red-500 text-white")
+    ui.separator()
 
 
 ui.run_with(app)
