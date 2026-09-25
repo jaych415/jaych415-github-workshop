@@ -33,30 +33,15 @@ def home() -> None:
     def compute() -> None:
         result_label.text = parse_and_average(numbers_input.value)
 
-    ui.button("Compute Average", on_click=compute).classes("mt-2")
-    ui.separator()
-
-    numbers_input = ui.input("Numbers (comma-separated)")
-    result = ui.label("")
-
-    def calculate_average() -> None:
-        try:
-            values = [float(value.strip()) for value in numbers_input.value.split(",")]
-            if not values:
-                raise ValueError
-        except ValueError:
-            result.text = "Enter one or more valid numbers."
-            return
-
-        result.text = f"Average: {sum(values) / len(values):g}"
-
     def reset() -> None:
         numbers_input.value = ""
-        result.text = ""
+        result_label.text = "Enter numbers and click Compute"
 
-    with ui.row():
-        ui.button("Calculate", on_click=calculate_average)
-        ui.button("Reset", on_click=reset)
+    ui.button("Compute Average", on_click=compute).classes("mt-2")
+    ui.button("Reset", on_click=reset).classes(
+        "mt-2 ml-4 bg-red-500 text-white"
+    )
+    ui.separator()
 
 
 ui.run_with(app)
